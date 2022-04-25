@@ -132,9 +132,9 @@ void MainWndAddWidgets(HWND hWnd)
 	hSaveFileStatic = CreateWindowA("static", "Размер буфера", WS_CHILD, 10, 160, 55, 20, hWnd, NULL, NULL, NULL);
 	hSaveFileEdit = CreateWindowA("edit", "100", WS_CHILD, 70, 160, 50, 20, hWnd, NULL, NULL, NULL);
 
-	hSaveFileButton = CreateWindowA("button", "Сохранить", WS_CHILD, 150, 160, 100, 20, hWnd, (HMENU)OnButtonClicked4, NULL, NULL);
+	hSaveFileButton = CreateWindowA("button", "Сохранить", WS_CHILD, 150, 160, 100, 20, hWnd, (HMENU)OnButtonClicked3, NULL, NULL);
 
-	CreateWindowA("button", "Расчитать", WS_VISIBLE | WS_CHILD, 10, 190, 100, 30, hWnd, NULL, NULL, NULL);
+	CreateWindowA("button", "Расчитать", WS_VISIBLE | WS_CHILD, 10, 190, 100, 30, hWnd, (HMENU)OnButtonClicked3, NULL, NULL);
 
 }
 
