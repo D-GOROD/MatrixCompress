@@ -1,4 +1,5 @@
 #include "Matrix.h"
+#include <chrono>
 #define END_FOO "\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\"
 #define START_FOO "/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/"
 
@@ -19,29 +20,39 @@ float Matrix::get_D()
 {
 	return D;
 }
-void Matrix::print_matrix_to_console()
+string Matrix::GetMatrixString()
 {
-	cout << START_FOO << endl;
+	string str;
+	char buff[10];
 	for (int y : Y)
 	{
 		for (int x : X) {
-			printf("%3d", x + y);
+			sprintf_s(buff, "%3d", x + y);
+			str.append(buff);
 		}
-		std::cout << endl;
+		str.append("\r\n");
 	}
-	cout << endl;
+	/*str.append("\r\n");
 	for (int i = 0; i < Summ_count.size(); i++)
 	{
-		printf("%2d |", i);
+		sprintf_s(buff, "%2d |", i);
+		str.append(buff);
 	}
-	cout << endl;
+	str.append("\r\n");
 	for (int z : Summ_count)
 	{
-		printf("%2d |", z);
-	}
-	cout << endl << endl;
-	cout << "K = " << K << endl << "D = " << D << endl;
-	cout << END_FOO << endl;
+		sprintf_s(buff, "%2d |", z);
+		str.append(buff);
+	}*/
+	str.append("\r\n");
+	str.append("  K = ");
+	str.append(std::to_string(K));
+	str.append("\r\n");
+	str.append("  D = ");
+	str.append(std::to_string(D));
+	str.append("\r\n");
+	return str;
+	
 }
 void Matrix::print_matrix_to_file(ofstream& fout)
 {

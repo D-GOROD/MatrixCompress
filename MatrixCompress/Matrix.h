@@ -2,12 +2,14 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <string>
+#include <format>
 using namespace std;
 class Matrix
 {
 public:
 	Matrix(vector<int> X, vector<int> Y, vector<int> Summ_count, float D);
-	void print_matrix_to_console();
+	string GetMatrixString();
 	void print_matrix_to_file(ofstream& fout);
 	float get_K();
 	float get_D();
