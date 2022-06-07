@@ -12,9 +12,9 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #include <fstream>
 #include "Matrix.h"
 
-#define OnMenuAction1 1
-#define OnMenuAction2 2
-#define OnMenuAction3 3
+#define Help 1
+#define Save 2
+//#define OnMenuAction3 3
 #define OnExitSofrware 4
 #define IsMatrixQuadratic 5
 #define SaveToFileCheckbox 6
@@ -27,6 +27,7 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #define SetProcent 13
 //#define ResultEdit 13
 
+HANDLE CompressThread;
 char filename[260];
 char buff[255];
 OPENFILENAMEA ofn;
@@ -46,9 +47,11 @@ HWND hSaveFileButton;
 HWND ResultEdit;
 HWND Test;
 HWND Procent;
+HWND hSubmit;
 
 BOOL VisibleFlag1 = false;
 BOOL VisibleFlag2 = false;
+BOOL IsWork = false;
 
 int SIZE_X;
 int SIZE_Y;
@@ -56,12 +59,14 @@ int LENGHT_RESULT_VECTOR = 0;
 wchar_t D_MIN_CHAR[255] = {0};
 float D_MIN;
 
+vector<Matrix> Result;
+
 LRESULT CALLBACK SoftwareMainProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
 WNDCLASS NewWinsowClass(HBRUSH BGColor, HCURSOR Cursor, HINSTANCE hInstance, HICON Icon, LPCWSTR Name, WNDPROC Procedure);
 void MainWndAddMenus(HWND hWnd);
 void MainWndAddWidgets(HWND hWnd);
 void SetOpenFileParam(HWND hWnd);
-void MainProcedure();
+DWORD WINAPI MainProcedure(LPVOID lpParameter);
 void GetValue(HWND hWnd);
 bool EraseFoo(vector<int>& vec, int a);
 void PrintProcent(int procent);

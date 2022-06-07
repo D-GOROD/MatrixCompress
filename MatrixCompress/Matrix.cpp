@@ -32,18 +32,6 @@ string Matrix::GetMatrixString()
 		}
 		str.append("\r\n");
 	}
-	/*str.append("\r\n");
-	for (int i = 0; i < Summ_count.size(); i++)
-	{
-		sprintf_s(buff, "%2d |", i);
-		str.append(buff);
-	}
-	str.append("\r\n");
-	for (int z : Summ_count)
-	{
-		sprintf_s(buff, "%2d |", z);
-		str.append(buff);
-	}*/
 	str.append("\r\n");
 	str.append("  K = ");
 	str.append(std::to_string(K));
@@ -52,7 +40,6 @@ string Matrix::GetMatrixString()
 	str.append(std::to_string(D));
 	str.append("\r\n");
 	return str;
-	
 }
 void Matrix::print_matrix_to_file(ofstream& fout)
 {

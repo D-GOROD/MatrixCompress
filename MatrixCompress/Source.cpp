@@ -8,7 +8,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	if (!RegisterClassW(&SoftwareMainClass)) { return -1; }
 
 	MSG SoftwareMainMassage = { 0 };
-	CreateWindow(L"MainWindowClass", L"MatrixCompress", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 200, 200, 600, 300, NULL, NULL, NULL, NULL);
+	CreateWindow(L"MainWindowClass", L"MatrixCompress", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 50, 50, 600, 300, NULL, NULL, NULL, NULL);
 	while (GetMessage(&SoftwareMainMassage, NULL, NULL, NULL))
 	{
 		TranslateMessage(&SoftwareMainMassage);
@@ -36,14 +36,17 @@ LRESULT CALLBACK SoftwareMainProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp
 	case WM_COMMAND:
 		switch (wp)
 		{
-		case OnMenuAction1:
+		case Help:
 		{
-			GetWindowTextA(ResultEdit, buff, 255);
 			break;
 		}
-		case OnMenuAction2:
+		case Save:
 		{
-			SetWindowTextA(Test, buff);
+			GetSaveFileNameA(&ofn);
+			ofstream fout;
+			fout.open(filename);
+			Result[0].print_matrix_to_file(fout);
+			fout.close();
 			break;
 		}
 		case IsMatrixQuadratic:
@@ -85,7 +88,7 @@ LRESULT CALLBACK SoftwareMainProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp
 		{
 			ShowWindow(Procent, 1);
 			GetValue(hWnd);
-			MainProcedure();
+			CompressThread = CreateThread(NULL, 0, MainProcedure, NULL, 0, NULL);
 			break;
 		}
 		case OnExitSofrware:
@@ -116,15 +119,13 @@ void MainWndAddMenus(HWND hWnd)
 {
 	HMENU RootMenu = CreateMenu();
 	HMENU SubMenu = CreateMenu();
-	HMENU SubSubMenu = CreateMenu();
-	AppendMenu(SubSubMenu, MF_STRING, OnMenuAction1, L"Get");
-	AppendMenu(SubSubMenu, MF_STRING, OnMenuAction2, L"Set");
 
-	AppendMenu(SubMenu, MF_POPUP, (UINT_PTR)SubSubMenu, L"Action");
+	AppendMenu(SubMenu, MF_STRING, Save, L"Сохранить");
 	AppendMenu(SubMenu, MF_SEPARATOR, NULL, NULL);
-	AppendMenu(SubMenu, MF_STRING, OnExitSofrware, L"Exit");
+	AppendMenu(SubMenu, MF_STRING, OnExitSofrware, L"Выход");
 
-	AppendMenu(RootMenu, MF_POPUP, (UINT_PTR)SubMenu, L"Menu");
+	AppendMenu(RootMenu, MF_POPUP, (UINT_PTR)SubMenu, L"Файл");
+	AppendMenu(RootMenu, MF_STRING, Help, L"Справка");
 	SetMenu(hWnd, RootMenu);
 }
 
@@ -149,7 +150,7 @@ void MainWndAddWidgets(HWND hWnd)
 	/*Кнопка сохранения в файл*/
 	hSaveFileButton = CreateWindowA("button", "Сохранить", WS_CHILD, 130, 157, 100, 25, hWnd, (HMENU)SaveToFile, NULL, NULL);
 	/*Кнопка расчитать*/
-	CreateWindowA("button", "Рассчитать", WS_VISIBLE | WS_CHILD, 10, 190, 100, 30, hWnd, (HMENU)Submit, NULL, NULL);
+	hSubmit = CreateWindowA("button", "Рассчитать", WS_VISIBLE | WS_CHILD, 10, 190, 100, 30, hWnd, (HMENU)Submit, NULL, NULL);
 	/*Проценты*/
 	Procent = CreateWindowA("static", "0%", WS_CHILD, 115, 197, 100, 30, hWnd, (HMENU)SetProcent, NULL, NULL);
 	/*Окно вывода*/
@@ -171,7 +172,7 @@ void SetOpenFileParam(HWND hWnd)
 	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 }
 
-void MainProcedure()
+DWORD WINAPI MainProcedure(LPVOID lpParameter)
 {
 	auto start = chrono::high_resolution_clock::now();
 	long long N = (pow(2, ((SIZE_X - 2) + (SIZE_Y - 2)))) - 1;
@@ -183,7 +184,7 @@ void MainProcedure()
 	vector<int> X, Y;
 	vector<int> X_min, Y_min;
 	vector<int> Summ_count, Summ_count_min;;
-	vector<Matrix> Result;
+	//vector<Matrix> Result;
 	float K_min = 100;
 	float D_max = 0;
 	bool flag = true;
@@ -205,6 +206,7 @@ void MainProcedure()
 			Y.push_back(i);
 		}
 		Summ_count.resize(X.back() + Y.back() + 1);
+		int K = Summ_count.capacity();
 		for (int i = 0; i < M; i++) {
 			if (N & (static_cast<long long>(1) << i)) {
 				if (i < halfM)
@@ -279,6 +281,8 @@ void MainProcedure()
 	SetWindowTextA(ResultEdit, result.c_str());
 	fout << "Time - " << duration.count() << endl;
 	fout.close();
+
+	return 0;
 }
 
 bool EraseFoo(vector<int>& vec, int a)
