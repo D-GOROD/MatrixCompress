@@ -38,6 +38,7 @@ LRESULT CALLBACK SoftwareMainProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp
 		{
 		case Help:
 		{
+			MessageBoxA(hWnd, help.c_str(), "Справка", MB_OK);
 			break;
 		}
 		case Save:
@@ -133,7 +134,7 @@ void MainWndAddWidgets(HWND hWnd)
 {
 	/*Поле ввода X*/
 	CreateWindowA("static", "Ширина:", WS_VISIBLE | WS_CHILD, 10, 10, 55, 30, hWnd, NULL, NULL, NULL);
-	hSizeX = CreateWindowA("edit", "10", WS_VISIBLE | WS_CHILD | ES_NUMBER, 70, 10, 50, 20, hWnd, (HMENU)GetXIndex, NULL, NULL);
+	hSizeX = CreateWindowA("edit", NULL, WS_VISIBLE | WS_CHILD | ES_NUMBER, 70, 10, 50, 20, hWnd, (HMENU)GetXIndex, NULL, NULL);
 	/*ЧекБокс, если матрица не квадратична*/
 	CreateWindowA("button", "Матрица не квадратична", WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, 10, 40, 200, 20, hWnd, (HMENU)IsMatrixQuadratic, NULL, NULL);
 	/*Поле ввода Y*/

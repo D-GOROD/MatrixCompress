@@ -61,6 +61,8 @@ float D_MIN;
 
 vector<Matrix> Result;
 
+string help = "Данное программное обеспечение служит для поиска оптимального решения задачи расположения каналов управления позиционного гидропривода\n\nВ полях \"Ширина\" и \"Высота\" указываются размеры исходной матрцы\nВ поле \"D_MIN\" устанавливается нижняя граница коэффициента D\nВ поле \"Размер\" устанавливается длина результирующего вектора.";
+
 LRESULT CALLBACK SoftwareMainProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
 WNDCLASS NewWinsowClass(HBRUSH BGColor, HCURSOR Cursor, HINSTANCE hInstance, HICON Icon, LPCWSTR Name, WNDPROC Procedure);
 void MainWndAddMenus(HWND hWnd);
