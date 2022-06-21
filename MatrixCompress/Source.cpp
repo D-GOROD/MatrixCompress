@@ -184,8 +184,8 @@ DWORD WINAPI MainProcedure(LPVOID lpParameter)
 	int halfM = SIZE_Y - 2;
 	vector<int> X, Y;
 	vector<int> X_min, Y_min;
-	vector<int> Summ_count, Summ_count_min;;
-	//vector<Matrix> Result;
+	vector<int> Summ_count, Summ_count_min;
+	Result.clear();
 	float K_min = 100;
 	float D_max = 0;
 	bool flag = true;
