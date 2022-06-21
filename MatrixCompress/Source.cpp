@@ -166,7 +166,7 @@ void SetOpenFileParam(HWND hWnd)
 	ofn.lpstrFile = filename;
 	ofn.nMaxFile = sizeof(filename);
 	ofn.lpstrFilter = ".txt";
-	ofn.lpstrDefExt = ".txt";
+	ofn.lpstrDefExt = "txt";
 	ofn.lpstrFileTitle = NULL;
 	ofn.nMaxFileTitle = 0;
 	ofn.lpstrInitialDir = NULL;
